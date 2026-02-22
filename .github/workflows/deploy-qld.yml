@@ -1,0 +1,18 @@
+name: Deploy QLD
+
+on:
+  push:
+    branches:
+      - qld
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Deploy
+        run: |
+          cd /srv/qld &&
+          git pull &&
+          composer install --no-interaction &&
+          php artisan migrate --force &&
+          php artisan config:clear
